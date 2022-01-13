@@ -12,10 +12,18 @@ function Book(title, author, pageNumber, haveRead) {
     this.haveRead = haveRead;
 }
 
-function addBookToLibrary() {
-
+function addBookToLibrary(myLibaray, newBook) {
+    myLibrary.push(newBook);
+    return myLibrary
 }
 
-function loadLibrary() {
+const loadLibrary = function (myLibrary) {
+    frame = document.getElementById("frame");
+    for (let i = 0; i < myLibrary.lenght; i++) {
+        let bookSlot = document.createElement("div");
+        bookSlot.className = "bookSlot";
+        frame.appendChild(bookSlot);
+    }
+    // Not done either need to then post the data to each of the slots or fill the slots as I go.
 
 }
