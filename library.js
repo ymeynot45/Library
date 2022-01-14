@@ -11,13 +11,14 @@ const Book = function (title, author, pageNumber, haveRead) {
 
 const addBookForm = function () {
     frame = document.getElementById("newBookEntry")
-    console.log(frame.textContent);
     
     // Fetching HTML Elements in Variables by ID.
     let createform = document.createElement('form'); // Create New Element Form
     createform.setAttribute("action", ""); // Setting Action Attribute on Form
     createform.setAttribute("method", "post"); // Setting Method Attribute on Form
+    createform.setAttribute("id", "newBookForm");
     frame.appendChild(createform);
+    console.log(createform);
 
     let heading = document.createElement('h4'); // Heading of Form
     heading.innerHTML = "Add new book ";
@@ -82,14 +83,34 @@ const addBookForm = function () {
 
 
     let submitElement = document.createElement('input'); // Append Submit Button
+    submitElement.setAttribute("id", "newBookSubmitButton");
     submitElement.setAttribute("type", "submit");
     submitElement.setAttribute("name", "newBookSubmit");
     submitElement.setAttribute("value", "Submit");
     createform.appendChild(submitElement);
-
-
+    
+    submitElement.addEventListener ("click", 
+        function () {
+            alert("I found the button");
+        });
 }
 
+const toggleHaveRead = function(book) {  //currently un attached
+    if (book.haveRead === true){
+        book.haveRead = false
+        return book
+    }
+    else {
+        book.haveRead = true
+        return book
+    };
+}
+
+const findBookInLibrary = function(myLibrary, title) {
+    let book = myLibrary.filter(book => book.title === title);
+    console.log(book);
+    return book
+}
 
 const addBookToLibrary = function (myLibrary, newBook) {
     myLibrary.push(newBook);
@@ -117,7 +138,8 @@ const addReadButton = function(location) { // I know I should break this up into
     
     button.addEventListener ("click", 
         function() {
-            alert("I read this!");
+            alert(location.textContent);
+
             // later to change the status of if the book has been read.
         });
 };
@@ -130,3 +152,4 @@ console.log(myLibrary);
 
 document.body.addEventListener("load", loadLibrary(myLibrary));
 document.body.addEventListener("load", addBookForm());  
+
