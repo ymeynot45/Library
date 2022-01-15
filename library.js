@@ -1,6 +1,8 @@
 let myLibrary = [];
+let nextBookId = 4;
 
-const Book = function (title, author, pageNumber, haveRead) {
+const Book = function (id, title, author, pageNumber, haveRead) {
+    this.id = id;
     this.title = title;
     this.author = author;
     this.pageNumber = pageNumber;
@@ -106,16 +108,27 @@ const toggleHaveRead = function(book) {  //currently un attached
     };
 }
 
-const findBookInLibrary = function(myLibrary, title) {
-    let book = myLibrary.filter(book => book.title === title);
+const getTitleFromPage = function (location) {
+
+
+}
+
+const findBookInLibrary = function(myLibrary, title) {  //currently un attached
+    let book = myLibrary.filter(book => book.id === id);
     console.log(book);
     return book
 }
 
-const addBookToLibrary = function (myLibrary, newBook) {
+const addBookToLibrary = function(myLibrary, newBook) {
     myLibrary.push(newBook);
     console.log(myLibrary);
     return myLibrary
+}
+
+const addIdToBook = function(newbook) {
+    newbook['id'] = nextBookId
+    nextBookId = nextBookId++
+    return newbook
 }
 
 const loadLibrary = function(library) {  //puting this aside for the moment to actually use the constructor
@@ -124,6 +137,7 @@ const loadLibrary = function(library) {  //puting this aside for the moment to a
         spacer = " - "
         let bookSlot = document.createElement("li");
         bookSlot.setAttribute("class", "bookSlot");
+        bookSlot.setAttribute("id", book.id);
         bookSlot.textContent = book.title + spacer + book.author + spacer + book.pageNumber + spacer + book.haveRead + "   ";
         addReadButton(bookSlot);
         frame.appendChild(bookSlot);
@@ -139,15 +153,17 @@ const addReadButton = function(location) { // I know I should break this up into
     button.addEventListener ("click", 
         function() {
             alert(location.textContent);
+            alert(location.id);
+
 
             // later to change the status of if the book has been read.
         });
 };
 
 
-myLibrary.push(new Book("The Hobbit", "J.R.R. Tolkien", 295, false));
-myLibrary.push(new Book("Flight from the Dark", "Joe Denver", 300, true));
-myLibrary.push(new Book("Fire on the Water", "Gary Chalk", 350, false));
+myLibrary.push(new Book(1, "The Hobbit", "J.R.R. Tolkien", 295, false));
+myLibrary.push(new Book(2, "Flight from the Dark", "Joe Denver", 300, true));
+myLibrary.push(new Book(3, "Fire on the Water", "Gary Chalk", 350, false));
 console.log(myLibrary);
 
 document.body.addEventListener("load", loadLibrary(myLibrary));
