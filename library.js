@@ -97,31 +97,20 @@ const addBookForm = function () {
         });
 }
 
-const toggleHaveRead = function(book) {  //currently un attached
-    if (book.haveRead === true){
-        book.haveRead = false
-        return book
-    }
-    else {
-        book.haveRead = true
-        return book
-    };
-}
-
-const getTitleFromPage = function (location) {
+const getIdFromPage = function (location) {
 
 
 }
 
 const findBookInLibrary = function(myLibrary, id) {  //currently un attached
     let book = myLibrary.filter(book => book.id === id);
-    console.log(book);
+    // console.log(book);
     return book
 }
 
 const addBookToLibrary = function(myLibrary, newBook) {
     myLibrary.push(newBook);
-    console.log(myLibrary);
+    // console.log(myLibrary);
     return myLibrary
 }
 
@@ -152,18 +141,34 @@ const addReadButton = function(location) { // I know I should break this up into
     
     button.addEventListener ("click", 
         function() {
-            alert(location.textContent);
-            alert(location.id);
-            let changedBook = myLibrary.find(book => book.id === parseInt(location.id));
-            // later to change the status of if the book has been read.
+            // alert(location.textContent);
+            // alert(location.id);
+            toggleHaveRead(parseInt(location.id));
         });
 };
 
+const toggleHaveRead = function(id) {
+    changedBook = findBookInLibrary(myLibrary, id)
+    // console.log("mylibary first book");
+    console.log(`${myLibrary[0]} as an oject`);
+    console.log(myLibrary[0]);
+    // console.log(id);
+    console.log(`${changedBook} as an array` );
+    console.log(changedBook);
+    if (changedBook.haveRead === true){
+        changedBook.haveRead = false
+        return changedBook
+    }
+    else {
+        changedBook.haveRead = true
+        return changedBook
+    };
+}
 
 myLibrary.push(new Book(1, "The Hobbit", "J.R.R. Tolkien", 295, false));
 myLibrary.push(new Book(2, "Flight from the Dark", "Joe Denver", 300, true));
 myLibrary.push(new Book(3, "Fire on the Water", "Gary Chalk", 350, false));
-console.log(myLibrary);
+// console.log(myLibrary);
 
 document.body.addEventListener("load", loadLibrary(myLibrary));
 document.body.addEventListener("load", addBookForm());  
