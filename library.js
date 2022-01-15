@@ -113,7 +113,7 @@ const getTitleFromPage = function (location) {
 
 }
 
-const findBookInLibrary = function(myLibrary, title) {  //currently un attached
+const findBookInLibrary = function(myLibrary, id) {  //currently un attached
     let book = myLibrary.filter(book => book.id === id);
     console.log(book);
     return book
@@ -154,8 +154,7 @@ const addReadButton = function(location) { // I know I should break this up into
         function() {
             alert(location.textContent);
             alert(location.id);
-
-
+            let changedBook = myLibrary.find(book => book.id === parseInt(location.id));
             // later to change the status of if the book has been read.
         });
 };
