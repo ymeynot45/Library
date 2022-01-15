@@ -10,6 +10,47 @@ const Book = function (id, title, author, pageNumber, haveRead) {
     return this
 }
 
+const loadLibrary = function(library) {
+    frame = document.getElementById("shelf");
+    library.forEach(book => {
+        spacer = " - "
+        let bookSlot = document.createElement("li");
+        bookSlot.setAttribute("class", "bookSlot");
+        bookSlot.setAttribute("id", book.id);
+        bookSlot.textContent = book.title + spacer + book.author + spacer + book.pageNumber + spacer + book.haveRead + "   ";
+        addReadButton(bookSlot);
+        frame.appendChild(bookSlot);
+    });
+}
+
+const addReadButton = function(location) { // I know I should break this up into multiple functions.
+    let button = document.createElement("button");
+    button.setAttribute("class", "readButton");
+    button.innerHTML = "Finished Book?"
+    location.appendChild(button);
+    button.addEventListener ("click", 
+        function() {
+            toggleHaveRead(parseInt(location.id), location);
+            addReadButton(location);
+        });
+};
+
+const toggleHaveRead = function(id, bookSlot) {
+    myLibrary.forEach(book => {
+        if (book.id === id && book.haveRead === true){
+            book.haveRead = false
+            bookSlot.textContent = book.title + spacer + book.author + spacer + book.pageNumber + spacer + book.haveRead + "   ";
+            return book
+        };
+        if (book.id === id && book.haveRead === false){
+            book.haveRead = true
+            bookSlot.textContent = book.title + spacer + book.author + spacer + book.pageNumber + spacer + book.haveRead + "   ";
+            return book
+        };
+    });
+    console.log(myLibrary);
+}
+
 const addBookForm = function () {
     frame = document.getElementById("newBookEntry")
     
@@ -96,8 +137,6 @@ const addBookForm = function () {
 }
 
 const getIdFromPage = function (location) {
-
-
 }
 
 const findBookInLibrary = function(myLibrary, id) {  //currently un attached
@@ -114,49 +153,6 @@ const addIdToBook = function(newbook) {
     newbook['id'] = nextBookId
     nextBookId = nextBookId++
     return newbook
-}
-
-const loadLibrary = function(library) {  //puting this aside for the moment to actually use the constructor
-    frame = document.getElementById("shelf");
-    library.forEach(book => {
-        spacer = " - "
-        let bookSlot = document.createElement("li");
-        bookSlot.setAttribute("class", "bookSlot");
-        bookSlot.setAttribute("id", book.id);
-        bookSlot.textContent = book.title + spacer + book.author + spacer + book.pageNumber + spacer + book.haveRead + "   ";
-        addReadButton(bookSlot);
-        frame.appendChild(bookSlot);
-    });
-}
-
-const addReadButton = function(location) { // I know I should break this up into multiple functions.
-    let button = document.createElement("button");
-    button.setAttribute("class", "readButton");
-    button.innerHTML = "Finished Book?"
-    location.appendChild(button);
-    
-    button.addEventListener ("click", 
-        function() {
-            toggleHaveRead(parseInt(location.id));
-        });
-};
-
-const toggleHaveRead = function(id) {
-    // changedBook = findBookInLibrary(myLibrary, id)
-    myLibrary.forEach(book => {
-        if (book.id === id && book.haveRead === true){
-            book.haveRead = false
-            console.log(changedBook)
-            return book
-        };
-        if (book.id === id && book.haveRead === false){
-            book.haveRead = true
-            console.log(book)
-            return book
-        };  
-    });
-    bookSlot = document.getElementById(id);
-    bookSlot.textContent = book.title + spacer + book.author + spacer + book.pageNumber + spacer + book.haveRead + "   ";
 }
 
 myLibrary.push(new Book(1, "The Hobbit", "J.R.R. Tolkien", 295, false));
