@@ -105,7 +105,7 @@ const getIdFromPage = function (location) {
 const findBookInLibrary = function(myLibrary, id) {  //currently un attached
     let book = myLibrary.filter(book => book.id === id);
     // console.log(book);
-    return book
+    return book[0]
 }
 
 const addBookToLibrary = function(myLibrary, newBook) {
@@ -148,21 +148,26 @@ const addReadButton = function(location) { // I know I should break this up into
 };
 
 const toggleHaveRead = function(id) {
-    changedBook = findBookInLibrary(myLibrary, id)
-    // console.log("mylibary first book");
-    console.log(`${myLibrary[0]} as an oject`);
-    console.log(myLibrary[0]);
-    // console.log(id);
-    console.log(`${changedBook} as an array` );
-    console.log(changedBook);
-    if (changedBook.haveRead === true){
-        changedBook.haveRead = false
-        return changedBook
-    }
-    else {
-        changedBook.haveRead = true
-        return changedBook
-    };
+    // changedBook = findBookInLibrary(myLibrary, id)
+    // // console.log("mylibary first book");
+    // console.log(`${myLibrary[0]} as an oject`);
+    // console.log(myLibrary[0]);
+    // // console.log(id);
+    // console.log(`${changedBook} as an array` );
+    // console.log(changedBook);
+    myLibrary.forEach(book => {
+        if (book.id === id && book.haveRead === true){
+            book.haveRead = false
+            console.log(changedBook)
+            return book
+        };
+        if (book.id === id && book.haveRead === false){
+            book.haveRead = true
+            console.log(book)
+            return book
+        };
+    });
+    loadLibrary(myLibrary);  //doesn't work as it reloads it on top of the old data.
 }
 
 myLibrary.push(new Book(1, "The Hobbit", "J.R.R. Tolkien", 295, false));
