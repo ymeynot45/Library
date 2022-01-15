@@ -7,37 +7,35 @@ const Book = function (id, title, author, pageNumber, haveRead) {
     this.author = author;
     this.pageNumber = pageNumber;
     this.haveRead = haveRead;
-    console.log(this);  // delete later
     return this
 }
 
 const addBookForm = function () {
     frame = document.getElementById("newBookEntry")
     
-    // Fetching HTML Elements in Variables by ID.
-    let createform = document.createElement('form'); // Create New Element Form
-    createform.setAttribute("action", ""); // Setting Action Attribute on Form
-    createform.setAttribute("method", "post"); // Setting Method Attribute on Form
+    let createform = document.createElement('form');
+    createform.setAttribute("action", "");
+    createform.setAttribute("method", "post");
     createform.setAttribute("id", "newBookForm");
     frame.appendChild(createform);
     console.log(createform);
 
-    let heading = document.createElement('h4'); // Heading of Form
+    let heading = document.createElement('h4');
     heading.innerHTML = "Add new book ";
     createform.appendChild(heading);
 
-    let line = document.createElement('hr'); // Giving Horizontal Row After Heading
+    let line = document.createElement('hr'); 
     createform.appendChild(line);
 
     let linebreak = document.createElement('br');
     createform.appendChild(linebreak);
 
 
-    let newBookTitle = document.createElement('newBookTitle'); // Create Label for New Title Field
-    newBookTitle.innerHTML = "New Book Title : "; // Set Field Labels
+    let newBookTitle = document.createElement('newBookTitle'); 
+    newBookTitle.innerHTML = "New Book Title : "; 
     createform.appendChild(newBookTitle);
 
-    let newTitleElement = document.createElement('input'); // Create Input Field for New Title
+    let newTitleElement = document.createElement('input'); 
     newTitleElement.setAttribute("type", "text");
     newTitleElement.setAttribute("newBookTitle", "newTitle");
     createform.appendChild(newTitleElement);
@@ -45,11 +43,11 @@ const addBookForm = function () {
     let newTitleBreak = document.createElement('br');
     createform.appendChild(newTitleBreak);
 
-    let authorLable = document.createElement('label'); // Create Label for New Author field
+    let authorLable = document.createElement('label'); 
     authorLable.innerHTML = "Who is the author: ";
     createform.appendChild(authorLable);
 
-    let newAuthorElement = document.createElement('input'); // Create Input Field for New Author
+    let newAuthorElement = document.createElement('input'); 
     newAuthorElement.setAttribute("type", "text");
     newAuthorElement.setAttribute("name", "newAuthor");
     createform.appendChild(newAuthorElement);
@@ -57,11 +55,11 @@ const addBookForm = function () {
     let newAuthorBreak = document.createElement('br');
     createform.appendChild(newAuthorBreak);
 
-    let newPageCountLabel = document.createElement('label'); // Create Label for Page Count field
+    let newPageCountLabel = document.createElement('label');
     newPageCountLabel.innerHTML = "Total Pages : ";
     createform.appendChild(newPageCountLabel);
 
-    let newPageCountElement = document.createElement('input');  // currently broken
+    let newPageCountElement = document.createElement('input');
     newPageCountElement.setAttribute("type", "number");
     newPageCountElement.setAttribute("name", "newPageCountElement");
     createform.appendChild(newPageCountElement);
@@ -69,11 +67,11 @@ const addBookForm = function () {
     let newPageCountBreak = document.createElement('br');
     createform.appendChild(newPageCountBreak);
 
-    let haveReadLabel = document.createElement('label');  // Create Label for Have Read field
+    let haveReadLabel = document.createElement('label');
     haveReadLabel.innerHTML = "I Have Read This Book :";
     createform.appendChild(haveReadLabel);
 
-    let haveReadElement = document.createElement("input");  //currently broken
+    let haveReadElement = document.createElement("input");
     haveReadElement.setAttribute("type", "checkbox");
     haveReadElement.setAttribute("id", "haveReadCheckbox");
     haveReadElement.setAttribute("name", "haveReadElement");
@@ -104,13 +102,11 @@ const getIdFromPage = function (location) {
 
 const findBookInLibrary = function(myLibrary, id) {  //currently un attached
     let book = myLibrary.filter(book => book.id === id);
-    // console.log(book);
     return book[0]
 }
 
 const addBookToLibrary = function(myLibrary, newBook) {
     myLibrary.push(newBook);
-    // console.log(myLibrary);
     return myLibrary
 }
 
@@ -141,20 +137,12 @@ const addReadButton = function(location) { // I know I should break this up into
     
     button.addEventListener ("click", 
         function() {
-            // alert(location.textContent);
-            // alert(location.id);
             toggleHaveRead(parseInt(location.id));
         });
 };
 
 const toggleHaveRead = function(id) {
     // changedBook = findBookInLibrary(myLibrary, id)
-    // // console.log("mylibary first book");
-    // console.log(`${myLibrary[0]} as an oject`);
-    // console.log(myLibrary[0]);
-    // // console.log(id);
-    // console.log(`${changedBook} as an array` );
-    // console.log(changedBook);
     myLibrary.forEach(book => {
         if (book.id === id && book.haveRead === true){
             book.haveRead = false
@@ -165,9 +153,10 @@ const toggleHaveRead = function(id) {
             book.haveRead = true
             console.log(book)
             return book
-        };
+        };  
     });
-    loadLibrary(myLibrary);  //doesn't work as it reloads it on top of the old data.
+    bookSlot = document.getElementById(id);
+    bookSlot.textContent = book.title + spacer + book.author + spacer + book.pageNumber + spacer + book.haveRead + "   ";
 }
 
 myLibrary.push(new Book(1, "The Hobbit", "J.R.R. Tolkien", 295, false));
