@@ -1,8 +1,7 @@
 let myLibrary = [];
 let nextBookId = 1;
 
-const Book = function (id, title, author, pageNumber, haveRead) {
-    this.id = id;
+const Book = function (title, author, pageNumber, haveRead) {
     this.title = title;
     this.author = author;
     this.pageNumber = pageNumber;
@@ -10,14 +9,20 @@ const Book = function (id, title, author, pageNumber, haveRead) {
     return this
 }
 
+const bookInfo = function(book) {
+    console.log(book);
+    return `${book.title} - ${book.author} - ${book.pageNumber} - ${book.haveRead}   `
+}
+
 const loadLibrary = function(library) {
     frame = document.getElementById("shelf");
     library.forEach(book => {
-        spacer = " - "
         let bookSlot = document.createElement("li");
         bookSlot.setAttribute("class", "bookSlot");
         bookSlot.setAttribute("id", book.id);
-        bookSlot.textContent = book.title + spacer + book.author + spacer + book.pageNumber + spacer + book.haveRead + "   ";
+        console.log(`load library book ${book}`);
+        console.log(book);
+        bookSlot.textContent = bookInfo(book);
         addReadButton(bookSlot);
         frame.appendChild(bookSlot);
     });
@@ -39,12 +44,12 @@ const toggleHaveRead = function(id, bookSlot) {  // I have to refactor this badl
     myLibrary.forEach(book => {
         if (book.id === id && book.haveRead === true){
             book.haveRead = false
-            bookSlot.textContent = book.title + spacer + book.author + spacer + book.pageNumber + spacer + book.haveRead + "   ";
+            bookSlot.textContent = bookInfo(book);
             return book
         };
         if (book.id === id && book.haveRead === false){
             book.haveRead = true
-            bookSlot.textContent = book.title + spacer + book.author + spacer + book.pageNumber + spacer + book.haveRead + "   ";
+            bookSlot.textContent = bookInfo(book);
             return book
         };
     });
@@ -152,11 +157,8 @@ const handleSubmit = function(e) {
         e.preventDefault();
         const formData = new FormData(e.target);
         const formProps = Object.fromEntries(formData);
-        addIdToBook(formProps);
-        console.log(formProps);
         addBookToLibrary(myLibrary, formProps);
         clearForm();
-        console.log(myLibrary);
 }
 
 const clearForm = function(){
@@ -171,7 +173,12 @@ const findBookInLibrary = function(myLibrary, id) {  //currently un attached
 const addBookToLibrary = function(myLibrary, newBook) {
     addIdToBook(newBook);
     myLibrary = myLibrary.push(newBook);
+    postBookToLibrary(newBook);
     return myLibrary
+}
+
+const postBookToLibrary = function(newBook) {
+
 }
 
 const addIdToBook = function(newbook) {
