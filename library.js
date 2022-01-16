@@ -115,6 +115,7 @@ const addBookForm = function () {
     haveReadElementFalse.setAttribute("name", "haveReadElement");
     haveReadElementFalse.setAttribute("type", "radio");
     haveReadElementFalse.setAttribute("value", false);
+    haveReadElementFalse.setAttribute("checked", "checked");
     let radioFalseLable = document.createElement('label');
     radioFalseLable.innerHTML = "False   "
 
