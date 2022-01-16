@@ -31,11 +31,11 @@ const addReadButton = function(location) { // I know I should break this up into
     button.addEventListener ("click", 
         function() {
             toggleHaveRead(parseInt(location.id), location);
-            addReadButton(location);
+            addReadButton(location); //re-adding the button after making a change
         });
 };
 
-const toggleHaveRead = function(id, bookSlot) {
+const toggleHaveRead = function(id, bookSlot) {  // I have to refactor this badly.
     myLibrary.forEach(book => {
         if (book.id === id && book.haveRead === true){
             book.haveRead = false
@@ -48,16 +48,15 @@ const toggleHaveRead = function(id, bookSlot) {
             return book
         };
     });
-    console.log(myLibrary);
 }
 
 const addBookForm = function () {
-    frame = document.getElementById("newBookEntry")
+    frame = document.getElementById("newBookEntry")  // frame name
     
     let createform = document.createElement('form');
     createform.setAttribute("action", "");
     createform.setAttribute("method", "post");
-    createform.setAttribute("id", "newBookForm");
+    createform.setAttribute("id", "newBookForm");  //form name
     frame.appendChild(createform);
     console.log(createform);
 
@@ -71,14 +70,13 @@ const addBookForm = function () {
     let linebreak = document.createElement('br');
     createform.appendChild(linebreak);
 
-
     let newBookTitle = document.createElement('newBookTitle'); 
     newBookTitle.innerHTML = "New Book Title : "; 
     createform.appendChild(newBookTitle);
 
     let newTitleElement = document.createElement('input'); 
     newTitleElement.setAttribute("type", "text");
-    newTitleElement.setAttribute("newBookTitle", "newTitle");
+    newTitleElement.setAttribute("name", "newTitle");
     createform.appendChild(newTitleElement);
 
     let newTitleBreak = document.createElement('br');
@@ -109,15 +107,29 @@ const addBookForm = function () {
     createform.appendChild(newPageCountBreak);
 
     let haveReadLabel = document.createElement('label');
-    haveReadLabel.innerHTML = "I Have Read This Book :";
+    haveReadLabel.innerHTML = "I Have Read This Book : ";
     createform.appendChild(haveReadLabel);
 
-    let haveReadElement = document.createElement("input");
-    haveReadElement.setAttribute("type", "checkbox");
-    haveReadElement.setAttribute("id", "haveReadCheckbox");
-    haveReadElement.setAttribute("name", "haveReadElement");
-    haveReadElement.setAttribute("value", true);
-    createform.appendChild(haveReadElement);
+    let haveReadElementFalse = document.createElement("input");
+    haveReadElementFalse.setAttribute("id", "haveReadRadioFalse");
+    haveReadElementFalse.setAttribute("name", "haveReadElement");
+    haveReadElementFalse.setAttribute("type", "radio");
+    haveReadElementFalse.setAttribute("value", false);
+    let radioFalseLable = document.createElement('label');
+    radioFalseLable.innerHTML = "False   "
+
+    let haveReadElementTrue = document.createElement("input");
+    haveReadElementTrue.setAttribute("id", "haveReadRadioTrue");
+    haveReadElementTrue.setAttribute("name", "haveReadElement");
+    haveReadElementTrue.setAttribute("type", "radio");
+    haveReadElementTrue.setAttribute("value", true);
+    let radioTrueLable = document.createElement('label');
+    radioTrueLable.innerHTML = "True"
+
+    createform.appendChild(haveReadElementFalse);
+    createform.appendChild(radioFalseLable);
+    createform.appendChild(haveReadElementTrue);
+    createform.appendChild(radioTrueLable);
 
     let haveReadBreak = document.createElement('br');
     createform.appendChild(haveReadBreak);
@@ -130,13 +142,19 @@ const addBookForm = function () {
     submitElement.setAttribute("value", "Submit");
     createform.appendChild(submitElement);
     
-    submitElement.addEventListener ("click", 
-        function () {
-            alert("I found the button");
-        });
 }
 
-const getIdFromPage = function (location) {
+const handleSubmit = function(e) {
+        alert("I found the button");
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const formProps = Object.fromEntries(formData);
+
+        // tempBook = Array.from(document.querySelectorAll('#newBookForm input')).reduce((acc, input) => ({ ...acc, [input.id]: input.value}), {}); // only works for last 2 data points(kinda)
+        console.log(formProps);
+}
+
+const getIdFromPage = function (location) {  //not currently used
 }
 
 const findBookInLibrary = function(myLibrary, id) {  //currently un attached
@@ -145,7 +163,8 @@ const findBookInLibrary = function(myLibrary, id) {  //currently un attached
 }
 
 const addBookToLibrary = function(myLibrary, newBook) {
-    myLibrary.push(newBook);
+    newBook = addIdToBook(newBook);
+    myLibrary = myLibrary.push(newBook);
     return myLibrary
 }
 
@@ -158,8 +177,11 @@ const addIdToBook = function(newbook) {
 myLibrary.push(new Book(1, "The Hobbit", "J.R.R. Tolkien", 295, false));
 myLibrary.push(new Book(2, "Flight from the Dark", "Joe Denver", 300, true));
 myLibrary.push(new Book(3, "Fire on the Water", "Gary Chalk", 350, false));
+
 // console.log(myLibrary);
 
 document.body.addEventListener("load", loadLibrary(myLibrary));
 document.body.addEventListener("load", addBookForm());  
 
+const newBookForm = document.getElementById("newBookForm");
+newBookForm.addEventListener ("submit", handleSubmit);
