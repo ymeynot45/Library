@@ -178,7 +178,9 @@ const addBookToLibrary = function(myLibrary, newBook) {
 
 const addIdToBook = function(newbook) {
     newbook['id'] = nextBookId
-    nextBookId = nextBookId++
+    console.log(`${nextBookId} before addition`)
+    ++nextBookId
+    console.log(`${nextBookId} after addition`)
     return newbook
 }
 
