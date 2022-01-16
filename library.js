@@ -10,21 +10,22 @@ const Book = function (title, author, pageNumber, haveRead) {
 }
 
 const bookInfo = function(book) {
-    console.log(book);
     return `${book.title} - ${book.author} - ${book.pageNumber} - ${book.haveRead}   `
 }
 
-const loadLibrary = function(library) {
-    frame = document.getElementById("shelf");
-    library.forEach(book => {
-        let bookSlot = document.createElement("li");
+const createBookSlot = function(book) {
+    let bookSlot = document.createElement("li");
         bookSlot.setAttribute("class", "bookSlot");
         bookSlot.setAttribute("id", book.id);
-        console.log(`load library book ${book}`);
-        console.log(book);
         bookSlot.textContent = bookInfo(book);
         addReadButton(bookSlot);
+        frame = document.getElementById("shelf");
         frame.appendChild(bookSlot);
+}
+
+const loadLibrary = function(library) {
+    library.forEach(book => {
+        createBookSlot(book);
     });
 }
 
@@ -63,7 +64,6 @@ const addBookForm = function () {
     createform.setAttribute("method", "post");
     createform.setAttribute("id", "newBookForm");  //form name
     frame.appendChild(createform);
-    console.log(createform);
 
     let heading = document.createElement('h4');
     heading.innerHTML = "Add new book ";
@@ -153,11 +153,12 @@ const addBookForm = function () {
 }
 
 const handleSubmit = function(e) {
-        console.log("I found the button");
         e.preventDefault();
         const formData = new FormData(e.target);
         const formProps = Object.fromEntries(formData);
-        addBookToLibrary(myLibrary, formProps);
+        book = new Book(formProps.title, formProps.author, formProps.pageNumber, formProps.haveRead)
+        addBookToLibrary(myLibrary, book);
+        postBookToLibrary(book);
         clearForm();
 }
 
@@ -165,26 +166,30 @@ const clearForm = function(){
     document.getElementById("newBookForm").reset();
 };
 
-const findBookInLibrary = function(myLibrary, id) {  //currently un attached
-    let book = myLibrary.filter(book => book.id === id);
-    return book[0]
-}
-
 const addBookToLibrary = function(myLibrary, newBook) {
     addIdToBook(newBook);
     myLibrary = myLibrary.push(newBook);
-    postBookToLibrary(newBook);
+    findNextId();
     return myLibrary
 }
 
 const postBookToLibrary = function(newBook) {
-
+    createBookSlot(newBook);
 }
 
 const addIdToBook = function(newbook) {
     newbook['id'] = nextBookId
+    console.log(`add id`);
+    console.log(newbook);
     ++nextBookId
     return newbook
+}
+
+const findNextId = function() {
+    console.log(myLibrary);
+    nextId = Math.max(...myLibrary.map(book => book.id));
+    console.log(nextId);
+    return nextId
 }
 
 addBookToLibrary(myLibrary, new Book("The Hobbit", "J.R.R. Tolkien", 295, false));
