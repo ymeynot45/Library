@@ -1,5 +1,4 @@
 let myLibrary = [];
-let nextBookId = 1;
 
 const Book = function (title, author, pageNumber, haveRead) {
     this.title = title;
@@ -178,17 +177,19 @@ const postBookToLibrary = function(newBook) {
 }
 
 const addIdToBook = function(newbook) {
+    nextBookId = findNextId()
     newbook['id'] = nextBookId
-    console.log(`add id`);
-    console.log(newbook);
-    ++nextBookId
     return newbook
 }
 
 const findNextId = function() {
-    console.log(myLibrary);
     nextId = Math.max(...myLibrary.map(book => book.id));
-    console.log(nextId);
+    if(nextId < 1){
+        nextId = 1
+    }
+    else{
+        ++nextId
+    }
     return nextId
 }
 
