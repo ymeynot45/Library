@@ -1,5 +1,5 @@
 let myLibrary = [];
-let nextBookId = 4;
+let nextBookId = 1;
 
 const Book = function (id, title, author, pageNumber, haveRead) {
     this.id = id;
@@ -169,25 +169,20 @@ const findBookInLibrary = function(myLibrary, id) {  //currently un attached
 }
 
 const addBookToLibrary = function(myLibrary, newBook) {
+    addIdToBook(newBook);
     myLibrary = myLibrary.push(newBook);
     return myLibrary
 }
 
 const addIdToBook = function(newbook) {
     newbook['id'] = nextBookId
-    console.log(`${nextBookId} before addition`)
     ++nextBookId
-    console.log(`${nextBookId} after addition`)
     return newbook
 }
 
-myLibrary.push(new Book(1, "The Hobbit", "J.R.R. Tolkien", 295, false));
-myLibrary.push(new Book(2, "Flight from the Dark", "Joe Denver", 300, true));
-myLibrary.push(new Book(3, "Fire on the Water", "Gary Chalk", 350, false));
-
-// console.log(myLibrary);
+addBookToLibrary(myLibrary, new Book("The Hobbit", "J.R.R. Tolkien", 295, false));
+addBookToLibrary(myLibrary, new Book("Flight from the Dark", "Joe Denver", 300, true));
+addBookToLibrary(myLibrary, new Book("Fire on the Water", "Gary Chalk", 350, false));
 
 document.body.addEventListener("load", loadLibrary(myLibrary));
 document.body.addEventListener("load", addBookForm());  
-
-
