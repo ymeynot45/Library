@@ -154,16 +154,14 @@ const handleSubmit = function(e) {
         const formProps = Object.fromEntries(formData);
         addIdToBook(formProps);
         console.log(formProps);
-        clearForm()
-        // addBookForm(); // appends an extra form and the listern fails, I will just clear the form instead
+        addBookToLibrary(myLibrary, formProps);
+        clearForm();
+        console.log(myLibrary);
 }
 
 const clearForm = function(){
     document.getElementById("newBookForm").reset();
 };
-
-const getIdFromPage = function (location) {  //not currently used
-}
 
 const findBookInLibrary = function(myLibrary, id) {  //currently un attached
     let book = myLibrary.filter(book => book.id === id);
@@ -171,7 +169,6 @@ const findBookInLibrary = function(myLibrary, id) {  //currently un attached
 }
 
 const addBookToLibrary = function(myLibrary, newBook) {
-    newBook = addIdToBook(newBook);
     myLibrary = myLibrary.push(newBook);
     return myLibrary
 }
