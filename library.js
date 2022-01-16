@@ -74,7 +74,8 @@ const addBookForm = function () {
     newBookTitle.innerHTML = "New Book Title : "; 
     createform.appendChild(newBookTitle);
 
-    let newTitleElement = document.createElement('input'); 
+    let newTitleElement = document.createElement('input');
+    newTitleElement.setAttribute("id", "newTitle"); 
     newTitleElement.setAttribute("type", "text");
     newTitleElement.setAttribute("name", "newTitle");
     createform.appendChild(newTitleElement);
@@ -86,7 +87,7 @@ const addBookForm = function () {
     authorLable.innerHTML = "Who is the author: ";
     createform.appendChild(authorLable);
 
-    let newAuthorElement = document.createElement('input'); 
+    let newAuthorElement = document.createElement('input');
     newAuthorElement.setAttribute("type", "text");
     newAuthorElement.setAttribute("name", "newAuthor");
     createform.appendChild(newAuthorElement);
@@ -142,18 +143,24 @@ const addBookForm = function () {
     submitElement.setAttribute("name", "newBookSubmit");
     submitElement.setAttribute("value", "Submit");
     createform.appendChild(submitElement);
-    
+
+    newBookForm.addEventListener ("submit", handleSubmit);
 }
 
 const handleSubmit = function(e) {
-        alert("I found the button");
+        console.log("I found the button");
         e.preventDefault();
         const formData = new FormData(e.target);
         const formProps = Object.fromEntries(formData);
-
-        // tempBook = Array.from(document.querySelectorAll('#newBookForm input')).reduce((acc, input) => ({ ...acc, [input.id]: input.value}), {}); // only works for last 2 data points(kinda)
+        addIdToBook(formProps);
         console.log(formProps);
+        clearForm()
+        // addBookForm(); // appends an extra form and the listern fails, I will just clear the form instead
 }
+
+const clearForm = function(){
+    document.getElementById("newBookForm").reset();
+};
 
 const getIdFromPage = function (location) {  //not currently used
 }
@@ -184,5 +191,4 @@ myLibrary.push(new Book(3, "Fire on the Water", "Gary Chalk", 350, false));
 document.body.addEventListener("load", loadLibrary(myLibrary));
 document.body.addEventListener("load", addBookForm());  
 
-const newBookForm = document.getElementById("newBookForm");
-newBookForm.addEventListener ("submit", handleSubmit);
+
