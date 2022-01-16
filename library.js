@@ -77,7 +77,7 @@ const addBookForm = function () {
     let newTitleElement = document.createElement('input');
     newTitleElement.setAttribute("id", "newTitle"); 
     newTitleElement.setAttribute("type", "text");
-    newTitleElement.setAttribute("name", "newTitle");
+    newTitleElement.setAttribute("name", "title");
     createform.appendChild(newTitleElement);
 
     let newTitleBreak = document.createElement('br');
@@ -89,7 +89,7 @@ const addBookForm = function () {
 
     let newAuthorElement = document.createElement('input');
     newAuthorElement.setAttribute("type", "text");
-    newAuthorElement.setAttribute("name", "newAuthor");
+    newAuthorElement.setAttribute("name", "author");
     createform.appendChild(newAuthorElement);
 
     let newAuthorBreak = document.createElement('br');
@@ -101,7 +101,7 @@ const addBookForm = function () {
 
     let newPageCountElement = document.createElement('input');
     newPageCountElement.setAttribute("type", "number");
-    newPageCountElement.setAttribute("name", "newPageCountElement");
+    newPageCountElement.setAttribute("name", "pageNumber");
     createform.appendChild(newPageCountElement);
 
     let newPageCountBreak = document.createElement('br');
@@ -113,7 +113,7 @@ const addBookForm = function () {
 
     let haveReadElementFalse = document.createElement("input");
     haveReadElementFalse.setAttribute("id", "haveReadRadioFalse");
-    haveReadElementFalse.setAttribute("name", "haveReadElement");
+    haveReadElementFalse.setAttribute("name", "haveRead");
     haveReadElementFalse.setAttribute("type", "radio");
     haveReadElementFalse.setAttribute("value", false);
     haveReadElementFalse.setAttribute("checked", "checked");
@@ -122,7 +122,7 @@ const addBookForm = function () {
 
     let haveReadElementTrue = document.createElement("input");
     haveReadElementTrue.setAttribute("id", "haveReadRadioTrue");
-    haveReadElementTrue.setAttribute("name", "haveReadElement");
+    haveReadElementTrue.setAttribute("name", "haveRead");
     haveReadElementTrue.setAttribute("type", "radio");
     haveReadElementTrue.setAttribute("value", true);
     let radioTrueLable = document.createElement('label');
