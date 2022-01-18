@@ -12,14 +12,31 @@ const bookInfo = function(book) {
     return `${book.title} - ${book.author} - ${book.pageNumber} - ${book.haveRead}   `
 }
 
+const setupTitleButtons = function() {
+    const headers = ["Title", "Author", "Page Number", "Have_Read"]
+    headers.forEach(createHeaderButton);
+}
+
+const createHeaderButton = function(keyWord){
+    let frame = document.getElementById("firstShelf");
+    let button = document.createElement("button");
+    button.setAttribute("class", "headerButtons");
+    button.setAttribute("id", `${keyWord}Button`);
+    button.textContent = keyWord;
+    console.log(keyWord);
+    console.log(frame);
+    console.log(button.id)
+    frame.appendChild(button);
+}
+
 const createBookSlot = function(book) {
     let bookSlot = document.createElement("li");
-        bookSlot.setAttribute("class", "bookSlot");
-        bookSlot.setAttribute("id", book.id);
-        bookSlot.textContent = bookInfo(book);
-        addReadButton(bookSlot);
-        frame = document.getElementById("shelf");
-        frame.appendChild(bookSlot);
+    bookSlot.setAttribute("class", "bookSlot");
+    bookSlot.setAttribute("id", book.id);
+    bookSlot.textContent = bookInfo(book);
+    addReadButton(bookSlot);
+    frame = document.getElementById("shelf");
+    frame.appendChild(bookSlot);
 }
 
 const loadLibrary = function(library) {
@@ -197,5 +214,11 @@ addBookToLibrary(myLibrary, new Book("The Hobbit", "J.R.R. Tolkien", 295, false)
 addBookToLibrary(myLibrary, new Book("Flight from the Dark", "Joe Denver", 300, true));
 addBookToLibrary(myLibrary, new Book("Fire on the Water", "Gary Chalk", 350, false));
 
-document.body.addEventListener("load", loadLibrary(myLibrary));
-document.body.addEventListener("load", addBookForm());  
+const loadPage = function() {
+    loadLibrary(myLibrary);
+    setupTitleButtons();
+    addBookForm();
+}
+
+
+document.body.addEventListener("load", loadPage());
