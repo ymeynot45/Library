@@ -13,12 +13,16 @@ const bookInfo = function(book) {
 }
 
 const setupTitleButtons = function() {
-    const headers = ["Title", "Author", "Page Number", "Have_Read"]
+    const headers = ["Title", "Author", "Pages", "Have_Read"]
+    let firstShelf = document.getElementById("firstShelf");
+    let secondShelf = document.createElement("div");
+    secondShelf.setAttribute("id", "secondShelf");
+    firstShelf.appendChild(secondShelf);
     headers.forEach(createHeaderButton);
 }
 
 const createHeaderButton = function(keyWord){
-    let frame = document.getElementById("firstShelf");
+    let frame = document.getElementById("secondShelf");
     let button = document.createElement("button");
     button.setAttribute("class", "headerButtons");
     button.setAttribute("id", `${keyWord}Button`);
@@ -35,15 +39,19 @@ const createBookSlot = function(book) {
     bookSlot.setAttribute("id", book.id);
     bookSlot.textContent = bookInfo(book);
     addReadButton(bookSlot);
-    frame = document.getElementById("shelf");
+    frame = document.getElementById("thirdShelf");
     frame.appendChild(bookSlot);
 }
 
 const loadLibrary = function(library) {
+    setupTitleButtons();
+    let thirdShelf = document.createElement("ol");
+    thirdShelf.setAttribute(`id`, `thirdShelf`);
+    document.getElementById(`secondShelf`).appendChild(thirdShelf);
     library.forEach(book => {
         createBookSlot(book);
     });
-}
+}   
 
 const addReadButton = function(location) { // I know I should break this up into multiple functions.
     let button = document.createElement("button");
@@ -216,7 +224,6 @@ addBookToLibrary(myLibrary, new Book("Fire on the Water", "Gary Chalk", 350, fal
 
 const loadPage = function() {
     loadLibrary(myLibrary);
-    setupTitleButtons();
     addBookForm();
 }
 
