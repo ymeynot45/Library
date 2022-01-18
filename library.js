@@ -27,10 +27,82 @@ const createHeaderButton = function(keyWord){
     button.setAttribute("class", "headerButtons");
     button.setAttribute("id", `${keyWord}Button`);
     button.textContent = keyWord;
-    console.log(keyWord);
-    console.log(frame);
-    console.log(button.id)
     frame.appendChild(button);
+    button.addEventListener ("click", 
+    function() {
+        sortLibrary(keyWord);
+    });
+}
+
+
+const sortLibrary = (keyWord) => {  //not currently working
+    document.getElementById("thirdShelf").remove();
+    let library = myLibrary;
+    if(keyWord === "Title"){
+        library = library.sort(compareTitle);
+    }else if(keyWord === "Author"){
+        library = library.sort(compareAuthor);
+    }else if(keyWord == "Pages"){
+        library = library.sort(comparePages);
+    }else if(keyWord == "Have_Read"){
+        library = library.sort(compareHave_Read);
+    }else{
+        alert("Sorting Error, unrecognized keyWord");
+    }
+    // let sortedLibrary = library.sort((kw1, kw2) => (kw1.title < kw2.title) ? 1 : (kW1.title > kw2.title) ? -1: 0);
+    loadLibrary(library);
+}
+
+const compareTitle = function(a, b){
+    let titleA = a.title.toUpperCase();
+    let titleB = b.title.toUpperCase();
+
+    let comparison = 0;
+    if (titleA > titleB){
+        comparison = 1;
+    } else if (titleA < titleB){
+        comparison = -1
+    }
+    return comparison;
+}
+
+const compareAuthor = function(a, b){
+    let authorA = a.author.toUpperCase();
+    let authorB = b.author.toUpperCase();
+
+    let comparisonauthorA= 0;
+    if (authorA > authorB){
+        comparison = 1;
+    } else if (authorA < authorB){
+        comparison = -1
+    }
+    return comparison;
+}
+
+const comparePages = function(a, b){
+    let pagesA = a.pageNumber;
+    let pagesB = b.pageNumber;
+
+    let comparison = 0;
+    if (pagesA > pagesB){
+        comparison = 1;
+    } else if (pagesA < pagesB){
+        comparison = -1
+    }
+    return comparison;
+}
+
+const compareHave_Read = function(a, b){
+    let haveReadA = a.haveRead;
+    let haveReadB = b.haveRead;
+
+    let comparison = 0;
+    if (haveReadA > haveReadB){
+        comparison = 1;
+    } else if (haveReadA < haveReadB){
+        comparison = -1
+    }
+    return comparison;
 }
 
 const createBookSlot = function(book) {
@@ -44,7 +116,6 @@ const createBookSlot = function(book) {
 }
 
 const loadLibrary = function(library) {
-    setupTitleButtons();
     let thirdShelf = document.createElement("ol");
     thirdShelf.setAttribute(`id`, `thirdShelf`);
     document.getElementById(`secondShelf`).appendChild(thirdShelf);
@@ -61,7 +132,7 @@ const addReadButton = function(location) { // I know I should break this up into
     button.addEventListener ("click", 
         function() {
             toggleHaveRead(parseInt(location.id), location);
-            addReadButton(location); //re-adding the button after making a change
+            addReadButton(location);
         });
 };
 
@@ -218,11 +289,11 @@ const findNextId = function() {
     return nextId
 }
 
-addBookToLibrary(myLibrary, new Book("The Hobbit", "J.R.R. Tolkien", 295, false));
-addBookToLibrary(myLibrary, new Book("Flight from the Dark", "Joe Denver", 300, true));
-addBookToLibrary(myLibrary, new Book("Fire on the Water", "Gary Chalk", 350, false));
-
 const loadPage = function() {
+    addBookToLibrary(myLibrary, new Book("The Hobbit", "J.R.R. Tolkien", 295, false));
+    addBookToLibrary(myLibrary, new Book("Flight from the Dark", "Joe Denver", 300, true));
+    addBookToLibrary(myLibrary, new Book("Fire on the Water", "Gary Chalk", 350, false));
+    setupTitleButtons();
     loadLibrary(myLibrary);
     addBookForm();
 }
